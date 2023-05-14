@@ -1,11 +1,28 @@
 package it.uniroma3.diadia.ambienti;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Labirinto {
 
 	private Stanza stanzaIniziale;
 	private Stanza stanzaVincente;
+	private Map<String,Stanza> stanze;
+	private List<Stanza> elencoStanze;
+	private Set<Attrezzo> attrezziLabirinto;
+	
+	public Labirinto() {
+		stanze = new HashMap<>();
+		elencoStanze = new ArrayList<>();
+		attrezziLabirinto = new HashSet<>();
+		
+	}
 
 
 	/**
@@ -57,6 +74,57 @@ public class Labirinto {
 	public Stanza getStanzaIniziale() {
 		return this.stanzaIniziale;
 	}
+	
+	public void addStanza(Stanza stanza) {
+		this.stanze.put(stanza.getNome(), stanza);
+		this.elencoStanze.add(stanza);
+	}
+	
+	public Stanza getStanza(String nomeStanza) {
+		return this.stanze.get(nomeStanza);
+		
+	}
+
+
+	public void setStanzaIniziale(Stanza stanzaIniziale) {
+		this.stanzaIniziale = stanzaIniziale;
+	}
+	
+	public boolean addAttrezzo( Attrezzo nuovoAttrezzo) {
+		 return this.attrezziLabirinto.add(nuovoAttrezzo);
+	}
+
+
+	public void setStanzaVincente(Stanza stanzaVincente) {
+		this.stanzaVincente = stanzaVincente;
+	}
+
+
+	public Map<String, Stanza> getStanze() {
+		return stanze;
+	}
+
+
+	public void setStanze(Map<String, Stanza> stanze) {
+		this.stanze = stanze;
+	}
+
+
+	public List<Stanza> getElencoStanze() {
+		return elencoStanze;
+	}
+
+
+	public void setElencoStanze(List<Stanza> elencoStanze) {
+		this.elencoStanze = elencoStanze;
+	}
+
+
+	public Set<Attrezzo> getAttrezziLabirinto() {
+		return attrezziLabirinto;
+	}
+	
+	
 
 
 }

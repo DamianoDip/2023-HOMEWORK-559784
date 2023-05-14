@@ -1,7 +1,6 @@
 package it.uniroma3.diadia;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.giocatore.Giocatore;
 
 /**
@@ -26,6 +25,14 @@ public class Partita {
 	public Partita(IO io){
 		labirinto = new Labirinto();
 		labirinto.creaStanze();
+		stanzaCorrente = this.labirinto.getStanzaIniziale();
+		this.finita = false;
+		giocatore = new Giocatore();
+		this.io = io;
+
+	}
+	public Partita(IO io, Labirinto labirinto){
+		this.labirinto = labirinto;
 		stanzaCorrente = this.labirinto.getStanzaIniziale();
 		this.finita = false;
 		giocatore = new Giocatore();
@@ -64,6 +71,9 @@ public class Partita {
 
 	public Labirinto getLabirinto() {
 		return this.labirinto;
+	}
+	public void setLabirinto(Labirinto labirinto) {
+		this.labirinto = labirinto;
 	}
 	public void setStanzaCorrente(Stanza stanzaCorrente) {
 		this.stanzaCorrente = stanzaCorrente;
