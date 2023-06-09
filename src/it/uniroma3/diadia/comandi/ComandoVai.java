@@ -1,58 +1,46 @@
 package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.ambienti.StanzaBloccata;
+import it.uniroma3.diadia.giocatore.Giocatore;
 
-public class ComandoVai implements Comando {
+public class ComandoVai extends AbstractComando {
+	
+	private final static String NOME = "vai";
 
-	private String direzione ;
-
-
-
-
-	/*
+	/**
 	 * esecuzione del comando
-	 * 
 	 */
-
-	@Override 
-	public void esegui(Partita partita ) {
+	@Override
+	public void esegui(Partita partita) {
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
 		Stanza prossimaStanza = null;
-
-		if ( this.direzione == null) {
-			partita.getIO().mostraMessaggio("Dove vuoi andare? Devi Specificare una direzione");
-
-			return ;
+		if (this.getParametro() == null) {
+			this.getIo().mostraMessaggio("Dove vuoi andare? Devi specificare una direzione");
 		}
-		
-		prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
-		
-		
-		if ( prossimaStanza == null) {
-			partita.getIO().mostraMessaggio("Direzione non valida");
+		if(this.getParametro()!=null )// && (Direzione.valueOf(this.getParametro()).getClass() != Direzione.class))
+			try {
+			prossimaStanza = stanzaCorrente.getStanzaAdiacente(Direzione.valueOf(this.getParametro()));
+			} catch(IllegalArgumentException e) {
+				this.getIo().mostraMessaggio("Direzione inesistente");
+				return;
+			}
+			
+			if (prossimaStanza == null) {
+			this.getIo().mostraMessaggio("Direzione inesistente");
 			return;
 		}
-		if ( prossimaStanza == stanzaCorrente) {
-			partita.getIO().mostraMessaggio("Non puoi andare in quella direzione!");		}
 
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	else {
-			partita.setStanzaCorrente(prossimaStanza);
-		}
-
-		//		if ( partita.getStanzaCorrente()!= partita.getLabirinto().getStanzaVincente()) {
-		//			partita.getIO().mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
-		//		}
-		partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
-
+		partita.setStanzaCorrente(prossimaStanza);
+		this.getIo().mostraMessaggio(partita.getStanzaCorrente().getNome());
+		Giocatore giocatore = partita.getGiocatore();
+		giocatore.setCfu(giocatore.getCfu() - 1);
 	}
-
-
 
 	@Override
-	public void setParametro(String parametro) {
-		this.direzione  = parametro;
-
+	public String getNome() {
+		return NOME;
 	}
+
 }
